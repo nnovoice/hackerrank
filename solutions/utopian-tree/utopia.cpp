@@ -7,30 +7,32 @@
  */
 #include <stdio.h>
 
-int GetTreeHeight(int nSeasons)
+const int MAXSEASONS = 61;
+
+typedef unsigned int uint;
+
+void PopulateTreeHeights(uint* treeHeights, size_t nElements)
 {
-	if (nSeasons == 0) return 1;
-
-	if (nSeasons % 2 == 0) {
-		return (nSeasons / 2) * 3 + 1;
+	uint height = 0;
+	for (size_t i = 0; i < nElements; ++i) {
+		treeHeights[i] = ((i % 2) == 0) ? (height += 1) : (height *= 2);
+		//printf("%u %u\n", i, treeHeights[i]);
 	}
-
-	return (nSeasons / 2) * 3 + 1 + 1;
 }
 
 int main()
 {
 	int nCases = 0;
-	int nSeasons = 0;
-	int nTreeHeight = 0;
+	uint nSeasons = 0;
+	uint treeHeights[MAXSEASONS] = {0};
 
-	scanf("%d", &nCases);
+	PopulateTreeHeights(treeHeights, sizeof(treeHeights)/sizeof(int));
 
+	scanf("%u", &nCases);
 
 	for (int caseNum = 0; caseNum < nCases; ++caseNum) {
-		scanf ("%d", &nSeasons);
-		nTreeHeight = GetTreeHeight(nSeasons);
-		printf("%d\n", nTreeHeight);
+		scanf ("%u", &nSeasons);
+		printf("%u\n", treeHeights[nSeasons]);
 	}
 
 	return 0;
