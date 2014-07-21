@@ -1,0 +1,13 @@
+element 3 is at position 1
+element at position 3 is 1
+element at position 1 is 3
+element at position 5 is 1
+element 4 is at position 2
+element 2 is at position 4
+element at position 10 is 7
+element at position 9 is 8
+element at position 8 is 9
+element at position 7 is 10
+element 9 is at position 8
+element 8 is at position 9
+element 7 is at position 10
