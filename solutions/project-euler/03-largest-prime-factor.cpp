@@ -25,8 +25,8 @@ void gen_primes() {
     //    cout << primes[i] << endl;
 }
 
-int get_largest_prime_div(int N) {
-    int largest_prime_div = -1;
+long long int get_largest_prime_div(long long int N) {
+    long long int largest_prime_div = -1;
     for (int i = 0; primes[i] < N && i < nprimes; ++i) {
         //cout << "debug: " << "testing N = " << N << " against prime= " << primes[i] << endl;
         if (N % primes[i] == 0)
@@ -40,7 +40,7 @@ int get_largest_prime_div(int N) {
 
 int main()
 {
-    int T = 0, N = 0;
+    long long int T = 0, N = 0;
     cin >> T;
     //cout << "debug: " << "#tests= " << T << endl;
     gen_primes();
