@@ -1,18 +1,46 @@
+def get_prime_factors(N):
+    factors = []
+    for i in range(2, N):
+        if (N % i == 0):
+            while(N != 0):
+                if (N % i == 0):
+                    factors.append(i)
+                    N /= i
+                else:
+                    break
+    if (len(factors) == 0):
+        factors.append(N) #prime 
+
+    factors.sort()
+    return factors
+
+factors_map = {}
+
+for k in range(1,41):
+    #print k, get_prime_factors(k)
+    factors_map[k] = get_prime_factors(k)
+
 T = int(raw_input())
-squares = [2*2, 3*3, 4*4, 5*5, 6*6]
-factors = [2,3,4,5,6]
-print T
+
 for i in xrange(T):
     N = int(raw_input())
-    print N
-    multiple = 1
-    for j in range(1,N+1):
-        multiple *= j;
-        print "multiple=" , multiple
-        for l in range(5):
-            print "j = ", j, "l= ", l
-            if (j == squares[l]):
-                multiple /= factors[l]
-                print "got a square. new multiple=", multiple
-    print multiple
+    multiples = []
+    for n in range(2,N+1):
+        uniq_factors = set(factors_map[n])
+        for uf in uniq_factors:
+            if (multiples.count(uf) < factors_map[n].count(uf)):
+                diff = factors_map[n].count(uf) - multiples.count(uf)
+                while (diff > 0):
+                    multiples.append(uf)
+                    diff -= 1
+    
+    multiples.sort()
 
+    #print "debug: ", "full list of multiples=", multiples
+    smallest_multiple = 1;
+    for m in multiples:
+        smallest_multiple *= m
+
+    print smallest_multiple
+
+    
