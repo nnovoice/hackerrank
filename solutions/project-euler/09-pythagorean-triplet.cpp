@@ -14,6 +14,8 @@ int main()
         for (a = 2; a < N; ++a) {
             for (b = a + 1; b < N; ++b) {
                 c = N - a - b;
+                if (a > c || b > c)
+                    break;
                 if (a*a + b*b == c*c) {
                     prod = a*b*c;
                     if (prod > best_prod) {
