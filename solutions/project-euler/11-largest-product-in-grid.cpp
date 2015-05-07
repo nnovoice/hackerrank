@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string.h>
 #include <algorithm>
+//#include <climits>
 using namespace std;
 
 const int MAX = 26;
@@ -16,15 +16,20 @@ void init_grid(int grid[][MAX])
 
 int main() 
 {
+    //cout << INT_MAX << endl;
+    //cout << 100000000 - INT_MAX << endl;
     int grid[MAX][MAX];
-    int prod = 0, best = 0, l, r, u, d, diag;
-    // memset does not work!
+    int prod = 0, best = 0, l, r, u, d;
+    int diag_right_up, diag_right_bot, diag_left_up, diag_left_bot;
+    // memset does not work to set the cells to 1 because it sets that to every byte!
     //memset(grid, 0, sizeof(grid[0][0]) * MAX * MAX);
     init_grid(grid);
     for (int i = 3; i < 23; ++i) {
         for (int j = 3; j < 23; ++j) {
             cin >> grid[i][j];
+            //cout << grid[i][j] << " ";
         }
+        //cout << endl;
     }
 
     for (int i = 3; i < 23; ++i) {
@@ -51,10 +56,22 @@ int main()
             best = max(best, d);
 
             // diag
-            diag = grid[i][j] * grid[i+1][j+1] * grid[i+2][j+2] * grid[i+3][j+3];
+            diag_right_bot = grid[i][j] * grid[i+1][j+1] * grid[i+2][j+2] * grid[i+3][j+3];
             //cout << " diag= " << diag << endl;
-            best = max(best, diag);
-            //cout << "debug: " << " best so far: " << best << " " << i << " " << j << " " << grid[i][j] << endl;
+            best = max(best, diag_right_bot);
+
+
+            diag_right_up = grid[i][j] * grid[i-1][j+1] * grid[i-2][j+2] * grid[i-3][j+3];
+            best = max(best, diag_right_up);
+
+
+            diag_left_bot = grid[i][j] * grid[i+1][j-1] * grid[i+2][j-2] * grid[i+3][j-3];
+            best = max(best, diag_left_bot);
+
+
+            diag_left_up = grid[i][j] * grid[i-1][j-1] * grid[i-2][j-2] * grid[i-3][j-3];
+            best = max(best, diag_left_up);
+
         }
     }
     cout << best << endl;
