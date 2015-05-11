@@ -56,7 +56,8 @@ tfactors[1] = 1
 
 def print_tfactors():
     for i in range(1, 1025):
-        print i, tfactors[i]
+        if (tfactors[i] != 0):
+            print i, tfactors[i], get_prime_factors(tfactors[i])
 
 for i in range(1,NUM_TRINUMS):
     factors = get_prime_factors(trinums[i])
@@ -72,7 +73,16 @@ for i in range(1,NUM_TRINUMS):
     if (nfactors > max_factors):
         max_factors = nfactors
 
-print "max factors= ", max_factors
-print_tfactors()
+#print "max factors= ", max_factors
+#print_tfactors()
 
+T = int(raw_input())
+for i in range(T):
+    N = int(raw_input())
+    j = N + 1
+    while (j < len(tfactors)):
+        if (tfactors[j] != 0):
+            print tfactors[j]
+            break
+        j += 1
 
