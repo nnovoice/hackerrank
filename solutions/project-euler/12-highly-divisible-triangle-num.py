@@ -15,22 +15,15 @@ def gen_primes(n):
             while (j < MAX):
                 ps[j] = False
                 j += i
-    #print "num primes= ", len(primes)
-    #for i in range(len(primes)):
-    #    print i, primes[i]
 
 def get_prime_factors(n):
     f = []
     j = 0
-    #print "get_prime_factors: ", n, j, f, primes[j]
     while (n > 0 and primes[j] <= n):
         if (n % primes[j] == 0):
-            #print n, j, f, primes[j]
             while (n > 0):
-                #print "ok", n, j, f, primes[j]
                 if (n % primes[j] == 0):
                     f.append(primes[j])
-                    #print "appended ", primes[j]
                     n /= primes[j]
                 else:
                     break
@@ -38,43 +31,54 @@ def get_prime_factors(n):
 
     if (len(f) == 0):
         f.append(n)
-        #print primes[j], n, "appended: ", n
     return f
 
 trinums = []
 def gen_trinums(n):
+    trinums.append(0)
     trinums.append(1)
-    for i in range(1,n):
-        trinums.append(trinums[i-1] + i + 1)
-        #print trinums[i]
+    for i in range(2,n):
+        trinums.append(trinums[i-1] + i)
 
-gen_trinums(NUM_TRINUMS)
-gen_primes(MAX)
-max_factors = 0
-tfactors[0] = 0
-tfactors[1] = 1
+def sum_n(n):
+    return (n * (n + 1)) / 2
 
 def print_tfactors():
     for i in range(1, 1025):
         if (tfactors[i] != 0):
-            print i, tfactors[i], get_prime_factors(tfactors[i])
+            print i, tfactors[i]
 
-for i in range(1,NUM_TRINUMS):
-    factors = get_prime_factors(trinums[i])
-    nfactors = 1
-    for f in set(factors):
-        a = factors.count(f)
-        nfactors *= (a + 1)
+# number of factors is determined using the divisor or Tau function
+# d(n) = p^a * q^b * r^c ...
+# num divisors = (a + 1) * (b + 1) * (c + 1) ...
+#####
+def gen_num_divisors():
+    max_factors = 0
+    tfactors[0] = 0
+    tfactors[1] = 1
 
-    if (tfactors[nfactors] == 0):
-        tfactors[nfactors] = trinums[i]
+    for i in range(2,NUM_TRINUMS):
+        
+        factors = get_prime_factors(trinums[i])
+        nfactors = 1
+        for f in set(factors):
+            a = factors.count(f)
+            nfactors *= (a + 1)
+        
+        #print trinums[i], factors, nfactors
 
-    #print trinums[i], factors, "nfactors= ", nfactors
-    if (nfactors > max_factors):
-        max_factors = nfactors
+        if (tfactors[nfactors] == 0):
+            #print "num divisors for:", trinums[i], sum_n(i), "=", nfactors, "prime factors=", get_prime_factors(trinums[i])
+            tfactors[nfactors] = trinums[i]
 
-#print "max factors= ", max_factors
-#print_tfactors()
+        if (nfactors > max_factors):
+            max_factors = nfactors
+
+gen_primes(MAX)
+
+gen_trinums(NUM_TRINUMS)
+
+gen_num_divisors()
 
 T = int(raw_input())
 for i in range(T):
