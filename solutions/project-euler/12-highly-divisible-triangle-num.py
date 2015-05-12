@@ -64,14 +64,16 @@ def gen_num_divisors():
             a = factors.count(f)
             nfactors *= (a + 1)
         
-        print trinums[i], sum_n(i), nfactors, factors
+        #print trinums[i], sum_n(i), nfactors, factors
 
-        if (tfactors[nfactors] == 0):
-            print "got best for ", nfactors, "i=", i, "trinum=", trinums[i], "sum_n=", sum_n(i), "nfactors=", nfactors, "all factors=", factors
-            tfactors[nfactors] = trinums[i]
+        #if (tfactors[nfactors] == 0):
+        #    print "got best for ", nfactors, "i=", i, "trinum=", trinums[i], "sum_n=", sum_n(i), "nfactors=", nfactors, "all factors=", factors
+        #    tfactors[nfactors] = trinums[i]
 
         if (nfactors > max_factors):
             max_factors = nfactors
+            tfactors[nfactors] = trinums[i]
+            #print "got best for ", nfactors, "i=", i, "trinum=", trinums[i], "sum_n=", sum_n(i), "nfactors=", nfactors, "all factors=", factors
 
 gen_primes(MAX)
 
