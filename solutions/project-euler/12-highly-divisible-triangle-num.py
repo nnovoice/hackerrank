@@ -37,7 +37,7 @@ trinums = []
 def gen_trinums(n):
     trinums.append(0)
     trinums.append(1)
-    for i in range(2,n):
+    for i in range(2, n):
         trinums.append(trinums[i-1] + i)
 
 def sum_n(n):
@@ -57,18 +57,17 @@ def gen_num_divisors():
     tfactors[0] = 0
     tfactors[1] = 1
 
-    for i in range(2,NUM_TRINUMS):
-        
+    for i in range(2, NUM_TRINUMS):
         factors = get_prime_factors(trinums[i])
         nfactors = 1
         for f in set(factors):
             a = factors.count(f)
             nfactors *= (a + 1)
         
-        #print trinums[i], factors, nfactors
+        print trinums[i], sum_n(i), nfactors, factors
 
         if (tfactors[nfactors] == 0):
-            #print "num divisors for:", trinums[i], sum_n(i), "=", nfactors, "prime factors=", get_prime_factors(trinums[i])
+            print "got best for ", nfactors, "i=", i, "trinum=", trinums[i], "sum_n=", sum_n(i), "nfactors=", nfactors, "all factors=", factors
             tfactors[nfactors] = trinums[i]
 
         if (nfactors > max_factors):
