@@ -1,55 +1,49 @@
 #include <iostream>
-#include <map>
-#include <stack>
 using namespace std;
 
 const int MAX = 5000002;
 typedef unsigned long long int ulli;
 
-ulli collatz[5*MAX];
+ulli collatz[MAX];
 ulli col_stack[MAX];
 int idx;
 
-void set_collatz_cycle(int n) 
-{
-    ulli cycle = 0;
+void set_collatz_cycle(int n) {
+    ulli t = 0, cycle = 0;
+    idx = 0;
     col_stack[idx++] = n;
-    int t = 0;
-    while (idx != 0) {
+    while (collatz[n] == 0) {
         t = col_stack[--idx];
-        cout << "debug: " << "set collatz cycle: " << "index= " << idx << " top of stack= " << t << " collatz[" << t << "]= " << collatz[t] << endl;
-        cout << "debug: about to enter if\n";
-        if (collatz[t] != 0) {
+        if (t < MAX && collatz[t] != 0) {
             cycle = collatz[t];
-            while (idx != 0) {
-                collatz[col_stack[--idx]] = ++cycle;
+            while (idx > 0) {
+                t = col_stack[--idx];
+                cycle += 1;
+                if (t < MAX)
+                    collatz[t] = cycle;
             }
-            break;
         }
         else {
-            cout << "debug: inside else " << idx << endl;
             col_stack[idx++] = t;
-            cout << "col_stack val= " << col_stack[idx-1] << endl;
-            if (t % 2 == 0) {
-                t /= 2;
-            }
-            else {
+            if (t & 1) { 
                 t *= 3;
                 t += 1;
             }
+            else
+                t >>= 1;
+
             col_stack[idx++] = t;
-            cout << "debug: col stack val after calc= " << col_stack[idx-1] << endl;
-            cout << "debug: exiting else\n";
         }
     }
+    //cout << "found collatz[" << n << "]= " << collatz[n] << endl;
 }
 
 void init_collatz_values(int MAX) {
     collatz[0] = 0;
     collatz[1] = 1;
-    for (int i = 2; i < 250000; ++i) {
+    for (int i = 2; i < MAX; ++i) {
         set_collatz_cycle(i);
-        cout << i << "\t" << collatz[i] << endl;
+        //cout << i << "\t" << collatz[i] << endl;
     }
 }
 
@@ -70,7 +64,6 @@ int main()
     int T = 0, N = 0;
     cin >> T;
 
-    cout << collatz[27114424] << endl;
     init_collatz_values(MAX);
 
     while(T--) {
