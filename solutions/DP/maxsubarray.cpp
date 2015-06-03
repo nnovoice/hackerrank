@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 using namespace std;
 
 const int MAX = 100000 + 7;
@@ -13,15 +14,21 @@ int main()
     
     while (T--) {
         cin >> N;
-        mc = 0;
+        mc = LONG_LONG_MIN;
         cm = 0;
-        nmc = 0;
+        nmc = LONG_LONG_MIN;
         for (int i = 0; i < N; ++i) {
             cin >> arr[i];
             cm += arr[i];
             if (cm > mc) mc = cm;
-            if (arr[i] > 0) nmc += arr[i];
+            if (cm < 0) cm = 0;
+            if (arr[i] > 0) {
+                if (nmc < 0) nmc = 0;
+                nmc += arr[i];
+            }
         }
+        if (nmc == LONG_LONG_MIN && mc < 0)
+            nmc = mc;
         cout << mc << " " << nmc << endl;
     }
     return 0;
