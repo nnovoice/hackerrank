@@ -18,12 +18,23 @@ int main() {
 
     unsigned long long area = 0, best = 0;
     int min_ht = INT_MAX;
+    int l = 0, r = 0;
+    for (int i = 0; i < N; ++i) {
+        l = i - 1;
+        r = i + 1;
+        
+        for (; l >= 0 && h[l] > h[i]; --l)
+            ;
+        l += 1;
+        
+        for (; r < N && h[r] > h[i]; ++r) 
+            ;
+        r -= 1;
 
-    for (int i = N - 1, j = 1; i >= 0; --i, ++j) {
-        if (h[i] < min_ht)
-            min_ht = h[i];
+        //if (l < 0) l = 0;
+        //if (r >= N) r = N - 1;
 
-        area = min_ht * j;
+        area = h[i] * (r - l + 1);
         if (area > best)
             best = area;
     }
